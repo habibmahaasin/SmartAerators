@@ -1,1 +1,1 @@
-//adad
+document.getElementById("inner").innerHTML = "Inner From Js";

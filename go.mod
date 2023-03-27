@@ -4,11 +4,11 @@ go 1.19
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/gofiber/fiber/v2 v2.43.0 // indirect
-	github.com/gofiber/template v1.7.5 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/gofiber/fiber/v2 v2.43.0
+	github.com/gofiber/template v1.7.5
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golobby/cast v1.3.3 // indirect
-	github.com/golobby/dotenv v1.3.2 // indirect
+	github.com/golobby/dotenv v1.3.2
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
@@ -30,6 +30,6 @@ require (
 	golang.org/x/crypto v0.7.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
-	gorm.io/driver/postgres v1.5.0 // indirect
-	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
+	gorm.io/driver/postgres v1.5.0
+	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11
 )
