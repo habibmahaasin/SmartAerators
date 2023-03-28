@@ -12,6 +12,8 @@ func ParseTemplates(router *fiber.App) *fiber.App {
 	router.Static("/", "./public")
 	router.Static("/css", "./public/v1/assets/css")
 	router.Static("/js", "./public/v1/assets/js")
+	router.Static("/img", "./public/v1/assets/img")
+	router.Static("/vendor", "./public/v1/assets/vendor")
 	return router
 }
 

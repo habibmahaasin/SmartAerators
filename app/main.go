@@ -5,7 +5,8 @@ import (
 	"SmartAerators/infrastructures/database"
 	"SmartAerators/routes/v1"
 	"errors"
-	"fmt"
+
+	errorhandling "SmartAerators/package/error_handling"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -25,14 +26,9 @@ func Define() (*fiber.App, database.Database) {
 				code = e.Code
 			}
 
-			err = ctx.Status(code).Render(fmt.Sprintf("errors/%d", code), fiber.Map{
-				"Title": "Error " + fmt.Sprintf("%d", code),
-			})
-
+			err = errorhandling.PageNotFound(ctx, code)
 			if err != nil {
-				return ctx.Status(500).Render("errors/500", fiber.Map{
-					"Title": fiber.ErrInternalServerError.Message,
-				})
+				return errorhandling.InternalErrors(ctx)
 			}
 
 			return nil
