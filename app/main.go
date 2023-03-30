@@ -13,8 +13,7 @@ import (
 	"github.com/gofiber/template/html"
 )
 
-func Define() (*fiber.App, database.Database) {
-	database := database.NewDatabase()
+func Define() *fiber.App {
 	engine := html.New("./public/v1/templates", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
@@ -39,11 +38,12 @@ func Define() (*fiber.App, database.Database) {
 		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
 	}))
 
-	return app, database
+	return app
 }
 
 func main() {
-	router, db := Define()
+	router := Define()
+	db := database.Init()
 	config, _ := config.New()
 	router = routes.Routes(router, db)
 

@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ .Title }}</title>
+  <title>{{ .title }}</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/vendor/css/bootstrap/bootstrap.min.css">
 </head>
-{{template "layouts/header" .}}
+{{ if (eq .title "Login") }}
+{{ else }}
+  {{template "layouts/header" .}}
+{{ end }}
 <body>
   {{embed}}
 </body>
-{{template "layouts/footer" .}}
+{{ if (eq .title "Login") }}
+{{ else }}
+  {{template "layouts/footer" .}}
+{{ end }}
 <script src="/js/script.js"></script>
 <script src="/vendor/js/bootstrap/bootstrap.min.js"></script>
 </html>

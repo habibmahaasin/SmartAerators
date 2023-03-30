@@ -1,25 +1,28 @@
 package controllers
 
 import (
-	database "SmartAerators/infrastructures/database"
 	userRepository "SmartAerators/modules/v1/users/interfaces/repositories"
 	userUsecase "SmartAerators/modules/v1/users/usecases"
 	token "SmartAerators/package/jwt"
+
+	"github.com/gofiber/fiber/v2/middleware/session"
+	"gorm.io/gorm"
 )
 
 type UsersController struct {
 	userUseCase userUsecase.UsecasePresenter
 	jwtoken     token.JwToken
+	store       session.Store
 }
 
-func NewUserController(userUsecase userUsecase.UsecasePresenter, jwtoken token.JwToken) *UsersController {
-	return &UsersController{userUsecase, jwtoken}
+func NewUserController(userUsecase userUsecase.UsecasePresenter, jwtoken token.JwToken, store session.Store) *UsersController {
+	return &UsersController{userUsecase, jwtoken, store}
 }
 
-func UserController(db database.Database) *UsersController {
+func UserController(db *gorm.DB, store *session.Store) *UsersController {
 	repository := userRepository.NewRepository(db)
 	usecase := userUsecase.NewUsecase(repository)
 	jwtoken := token.NewJwToken()
 
-	return NewUserController(usecase, jwtoken)
+	return NewUserController(usecase, jwtoken, *store)
 }

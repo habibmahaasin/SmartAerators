@@ -8,18 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Database interface {
-	DatabaseConf() *gorm.DB
-}
-
-type database struct {
-}
-
-func NewDatabase() *database {
-	return &database{}
-}
-
-func (d *database) DatabaseConf() *gorm.DB {
+func Init() *gorm.DB {
 	config, err := config.New()
 	if err != nil {
 		log.Fatalln(err)

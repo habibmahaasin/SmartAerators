@@ -1,9 +1,13 @@
 package usecases
 
-import repositoriesUsers "SmartAerators/modules/v1/users/interfaces/repositories"
+import (
+	"SmartAerators/modules/v1/users/domain"
+	repositoriesUsers "SmartAerators/modules/v1/users/interfaces/repositories"
+)
 
 type UsecasePresenter interface {
 	Holder() string
+	Login(inputLogin domain.InputLogin) (domain.User, error)
 }
 
 type Usecase struct {

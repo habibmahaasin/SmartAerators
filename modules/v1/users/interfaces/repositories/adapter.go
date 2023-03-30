@@ -1,14 +1,19 @@
 package repositories
 
-import "SmartAerators/infrastructures/database"
+import (
+	"SmartAerators/modules/v1/users/domain"
+
+	"gorm.io/gorm"
+)
 
 type RepositoryPresenter interface {
+	GetUserByEmail(email string) (domain.User, error)
 }
 
 type Repository struct {
-	db database.Database
+	db *gorm.DB
 }
 
-func NewRepository(db database.Database) *Repository {
+func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{db}
 }

@@ -1,9 +1,25 @@
 package handler
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
-func (u *usersHandler) Holder(c *fiber.Ctx) error {
+func (u *usersHandler) Index(c *fiber.Ctx) error {
+	sess, err := u.store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+
+	name := sess.Get("name")
+
 	return c.Render("pages/index", fiber.Map{
-		"Title": "Hello, Note 👋!",
+		"title": "Hello, Index 👋!",
+		"name":  name,
+	}, layouts)
+}
+
+func (u *usersHandler) Login(c *fiber.Ctx) error {
+	return c.Render("pages/login", fiber.Map{
+		"title": "Login",
 	}, layouts)
 }
