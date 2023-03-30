@@ -23,17 +23,18 @@ func Routes(router *fiber.App, db *gorm.DB) *fiber.App {
 	userController := userController.UserController(db, store)
 	userHandler := userHandler.Handler(db, store)
 
-	views := router.Group("")
-	views.Get("/", userHandler.Index)
-
-	views.Get("/login", userHandler.Login)
-	views.Post("/login", userController.Login)
+	router = ParseTemplates(router)
 
 	api := router.Group("/api/v1")
 	api.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to SmartAerators API")
 	})
 
-	router = ParseTemplates(router)
+	router.Get("/login", userHandler.Login)
+	router.Post("/login", userController.Login)
+
+	pages := router.Group("")
+	pages.Get("/", userHandler.Index)
+
 	return router
 }

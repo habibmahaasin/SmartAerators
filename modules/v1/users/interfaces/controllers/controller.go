@@ -29,6 +29,7 @@ func (uc *UsersController) Login(c *fiber.Ctx) error {
 	if err != nil {
 		panic(err)
 	}
+
 	sess.Set("name", user.Full_name)
 	sess.Set("user_id", user.User_id)
 	sess.Set("role", user.Role_id)
