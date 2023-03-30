@@ -1,11 +1,11 @@
 package main
 
 import (
-	"SmartAerators/infrastructures/config"
 	"SmartAerators/infrastructures/database"
 	errorhandling "SmartAerators/package/error_handling"
 	"SmartAerators/routes/v1"
 	"errors"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -42,9 +42,11 @@ func Define() *fiber.App {
 
 func main() {
 	router := Define()
-	config, _ := config.New()
 	db := database.Init()
 	router = routes.Routes(router, db)
 
-	router.Listen(config.App.Url + ":" + config.App.Port)
+	router.Listen(":" + os.Getenv("PORT")) //server run
+
+	// config, _ := config.New() // local run
+	// router.Listen(config.App.Url + ":" + config.App.Port) // local run
 }

@@ -1,6 +1,7 @@
 package routes
 
 import (
+	mid "SmartAerators/infrastructures/middleware"
 	userController "SmartAerators/modules/v1/users/interfaces/controllers"
 	userHandler "SmartAerators/public/v1/handler"
 
@@ -33,7 +34,7 @@ func Routes(router *fiber.App, db *gorm.DB) *fiber.App {
 	router.Get("/login", userHandler.Login)
 	router.Post("/login", userController.Login)
 
-	pages := router.Group("")
+	pages := router.Group("", mid.AuthPages())
 	pages.Get("/", userHandler.Index)
 
 	return router
