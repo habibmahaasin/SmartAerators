@@ -15,7 +15,7 @@ func Init() *gorm.DB {
 		return nil
 	}
 
-	dsn := "host=" + config.Database.Host + " user=" + config.Database.Username + " password=" + config.Database.Password + " dbname=" + config.Database.Name + " port=" + config.Database.Port + " sslmode=disable TimeZone=Asia/Jakarta"
+	dsn := "host=" + config.Database.Host + " user=" + config.Database.Username + " password=" + config.Database.Password + " dbname=" + config.Database.Name + " port=" + config.Database.Port + " TimeZone=Asia/Jakarta"
 	Db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
