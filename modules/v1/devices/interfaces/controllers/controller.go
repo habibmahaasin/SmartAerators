@@ -13,14 +13,14 @@ func (dc *DevicesController) SubscribeWebhook(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&webhookData); err != nil {
 		fmt.Println(err)
-		return err
+		return nil
 	}
 
 	Antares_Device_Id := strings.Replace(webhookData.First.M2m_nev.M2m_rep.M2m_cin.Pi, "/antares-cse/cnt-", "", -1)
 	_, err := dc.deviceUseCase.DataFromWebhook(webhookData.First.M2m_nev.M2m_rep.M2m_cin.Con, Antares_Device_Id)
 	if err != nil {
-		fmt.Println(err)
-		return err
+		fmt.Println("error : ", err)
+		return nil
 	}
 
 	return nil
