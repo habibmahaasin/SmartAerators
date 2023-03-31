@@ -5,15 +5,15 @@ import (
 	repositoriesUsers "SmartAerators/modules/v1/users/interfaces/repositories"
 )
 
-type UsecasePresenter interface {
+type UserUsecasePresenter interface {
 	Holder() string
 	Login(inputLogin domain.InputLogin) (domain.User, error)
 }
 
-type Usecase struct {
-	repository repositoriesUsers.RepositoryPresenter
+type UserUsecase struct {
+	repository repositoriesUsers.UserRepositoryPresenter
 }
 
-func NewUsecase(repositories repositoriesUsers.RepositoryPresenter) *Usecase {
-	return &Usecase{repositories}
+func NewUserUsecase(repositories repositoriesUsers.UserRepositoryPresenter) *UserUsecase {
+	return &UserUsecase{repositories}
 }

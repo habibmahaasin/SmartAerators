@@ -6,14 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-type RepositoryPresenter interface {
+type UserRepositoryPresenter interface {
 	GetUserByEmail(email string) (domain.User, error)
 }
 
-type Repository struct {
+type UserRepository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) *Repository {
-	return &Repository{db}
+func NewUserRepository(db *gorm.DB) *UserRepository {
+	return &UserRepository{db}
 }

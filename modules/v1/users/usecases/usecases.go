@@ -7,12 +7,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (u *Usecase) Holder() string {
+func (u *UserUsecase) Holder() string {
 	a := "hello"
 	return a
 }
 
-func (u *Usecase) Login(inputLogin domain.InputLogin) (domain.User, error) {
+func (u *UserUsecase) Login(inputLogin domain.InputLogin) (domain.User, error) {
 	email := inputLogin.Email
 	password := inputLogin.Password
 

@@ -10,18 +10,18 @@ import (
 )
 
 type UsersController struct {
-	userUseCase userUsecase.UsecasePresenter
+	userUseCase userUsecase.UserUsecasePresenter
 	jwtoken     token.JwToken
 	store       session.Store
 }
 
-func NewUserController(userUsecase userUsecase.UsecasePresenter, jwtoken token.JwToken, store session.Store) *UsersController {
+func NewUserController(userUsecase userUsecase.UserUsecasePresenter, jwtoken token.JwToken, store session.Store) *UsersController {
 	return &UsersController{userUsecase, jwtoken, store}
 }
 
 func UserController(db *gorm.DB, store *session.Store) *UsersController {
-	repository := userRepository.NewRepository(db)
-	usecase := userUsecase.NewUsecase(repository)
+	repository := userRepository.NewUserRepository(db)
+	usecase := userUsecase.NewUserUsecase(repository)
 	jwtoken := token.NewJwToken()
 
 	return NewUserController(usecase, jwtoken, *store)

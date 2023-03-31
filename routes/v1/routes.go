@@ -2,8 +2,9 @@ package routes
 
 import (
 	mid "SmartAerators/infrastructures/middleware"
+	deviceController "SmartAerators/modules/v1/devices/interfaces/controllers"
 	userController "SmartAerators/modules/v1/users/interfaces/controllers"
-	userHandler "SmartAerators/public/v1/handler"
+	viewHandler "SmartAerators/public/v1/handlers"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
@@ -22,20 +23,19 @@ func ParseTemplates(router *fiber.App) *fiber.App {
 func Routes(router *fiber.App, db *gorm.DB) *fiber.App {
 	store := session.New()
 	userController := userController.UserController(db, store)
-	userHandler := userHandler.Handler(db, store)
+	deviceController := deviceController.DeviceController(db)
+	viewHandler := viewHandler.Handler(db, store)
 
 	router = ParseTemplates(router)
 
 	api := router.Group("/api/v1")
-	api.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Welcome to SmartAerators API")
-	})
+	api.Post("/webhook", deviceController.SubscribeWebhook)
 
-	router.Get("/login", userHandler.Login)
+	router.Get("/login", viewHandler.Login)
 	router.Post("/login", userController.Login)
 
 	pages := router.Group("", mid.AuthPages())
-	pages.Get("/", userHandler.Index)
+	pages.Get("/", viewHandler.Index)
 
 	return router
 }
