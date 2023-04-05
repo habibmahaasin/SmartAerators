@@ -5,9 +5,8 @@ COPY . .
 RUN go mod tidy
 RUN go build .app/main.go
 
-EXPOSE 6000
+EXPOSE 8080
 
-#CMD ["make", "start"]
 ENTRYPOINT [ "./main" ]
-# # Run application
+# CMD ["./main"]
 # CMD ["go", "run", "app/main.go"]
