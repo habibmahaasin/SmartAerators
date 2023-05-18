@@ -1,0 +1,105 @@
+#include <WiFi.h>
+#include <AntaresESP32HTTP.h>
+#include <ArduinoJson.h>
+#include <Arduino.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 23
+
+#define ACCESSKEY "862b34fe2de548cc:cdf66d91b12db8d2"       
+#define WIFISSID "Imron100x"         
+#define PASSWORD "awokwokwok"     
+#define projectName "GuppyTech"   
+#define deviceName "AllSensor"     
+
+AntaresESP32HTTP antares(ACCESSKEY);
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+
+unsigned long hitungan_milis;
+unsigned long milis_sekarang;
+const unsigned long nilai = 5000;
+
+float resolution;                                
+int measurings;
+float voltage;
+float pHvalue;
+float b = 0.00;
+float m = 0.167;
+float ndo = 0;
+float suhu;
+int device_status = 1;
+
+void phsetup (){
+  resolution = 1024.0; 
+}
+
+void phloop (){
+  measurings=0;
+  for (int i = 0; i < 10; i++){
+    measurings = measurings + analogRead(A0);     
+    delay(10);
+  }
+  voltage = ((5 / resolution) * (measurings/10));                                               
+  pHvalue = ((7 + ((2.5 - voltage) / m)))+ b;    
+  
+  Serial.print("pH= ");                          
+  Serial.println(pHvalue);
+}
+
+void suhusetup (){
+  sensors.begin();
+}
+  
+void suhuloop (){
+  sensors.requestTemperatures(); 
+  suhu = sensors.getTempCByIndex(0);
+  Serial.print("Celsius temperature: ");
+  Serial.print(suhu); 
+  Serial.print(" - Fahrenheit temperature: ");
+  Serial.println(sensors.getTempFByIndex(0));  
+}
+
+void nildo(){
+  ndo = suhu + pHvalue;
+  Serial.print("NDO = ");
+  Serial.print(ndo);
+}
+
+void stsdevice(){
+  Serial.print("\nDevice Status :");
+  Serial.println(device_status); 
+}
+
+void setup()                                     
+{   
+  phsetup ();
+  suhusetup ();
+  Serial.begin(115200);
+  antares.setDebug(true);
+  antares.wifiConnection(WIFISSID,PASSWORD);                                
+}
+
+void loop(){
+  milis_sekarang = millis();
+  if (milis_sekarang - hitungan_milis >= nilai)
+  {
+    antares.add("temperature", suhu);
+    antares.add("ph", pHvalue);
+    antares.add("dissolvedOxygen", ndo);
+    antares.add("statusDevice", device_status);
+    antares.send(projectName, deviceName);
+    
+    Serial.print("\n================================\n");
+    Serial.print("\nData Berhasil Dikirim\n");
+    Serial.print("\n================================\n");
+    hitungan_milis = milis_sekarang;
+  }
+  else {
+    phloop ();
+    suhuloop ();
+    nildo();
+    stsdevice();
+    Serial.print("\n================================\n");
+  }
+}
