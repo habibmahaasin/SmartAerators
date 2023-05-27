@@ -16,7 +16,10 @@ func (uc *UsersController) Login(c *fiber.Ctx) error {
 
 	user, err := uc.userUseCase.Login(inputLogin)
 	if err != nil {
-		return c.SendString("Error : " + err.Error())
+		return c.Render("pages/login", fiber.Map{
+			"title":   "Login",
+			"message": err.Error(),
+		}, layouts)
 	}
 
 	token, err := uc.jwtoken.GenerateToken(user.User_id, user.Full_name, user.Role_id)

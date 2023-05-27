@@ -25,6 +25,7 @@ func (u *viewHandler) Index(c *fiber.Ctx) error {
 
 func (u *viewHandler) Login(c *fiber.Ctx) error {
 	return c.Render("pages/login", fiber.Map{
-		"title": "Login",
+		"title":   "Login",
+		"message": "",
 	}, layouts)
 }

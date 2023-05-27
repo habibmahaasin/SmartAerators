@@ -9,6 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var layouts string = "layouts/main"
+
 type UsersController struct {
 	userUseCase userUsecase.UserUsecasePresenter
 	jwtoken     token.JwToken

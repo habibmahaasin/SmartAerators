@@ -5,20 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ .title }}</title>
-  <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/vendor/css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 {{ if (eq .title "Login") }}
-{{ else }}
-  {{template "layouts/header" .}}
-{{ end }}
-<body>
+  <link rel="stylesheet" href="/css/login.css">
   {{embed}}
-</body>
-{{ if (eq .title "Login") }}
 {{ else }}
-  {{template "layouts/footer" .}}
+  <link rel="stylesheet" href="/css/sidebar.css">
+  {{template "layouts/header" .}}
+  <body id="body-pd">
+    <div class="height-100 main-content">
+      {{embed}}
+    </div>
+    <div id="background"></div>
+  </body>
 {{ end }}
-<script src="/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="/vendor/js/bootstrap/bootstrap.min.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/script.js"></script>
 </html>

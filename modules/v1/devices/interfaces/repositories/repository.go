@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"SmartAerators/modules/v1/devices/domain"
-	"fmt"
 	"time"
 )
 
@@ -22,6 +21,5 @@ func (dr *DeviceRepository) GetAllDevices() ([]domain.Device, error) {
 	var device []domain.Device
 
 	err := dr.db.Find(&device).Error
-	fmt.Println(device)
 	return device, err
 }
