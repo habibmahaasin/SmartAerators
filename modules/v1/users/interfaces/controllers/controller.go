@@ -43,3 +43,16 @@ func (uc *UsersController) Login(c *fiber.Ctx) error {
 
 	return c.Redirect("/")
 }
+
+func (uc *UsersController) Logout(c *fiber.Ctx) error {
+	sess, err := uc.store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+
+	sess.Destroy()
+	c.ClearCookie("token")
+	c.ClearCookie("session_id")
+
+	return c.Redirect("/login")
+}
