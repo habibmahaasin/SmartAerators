@@ -34,10 +34,15 @@ func (du *DeviceUsecase) GetAllDevices() ([]domain.Device, error) {
 	return du.repository.GetAllDevices()
 }
 
-func (du *DeviceUsecase) PowerControl(id string, power string) error {
-	return du.repository.PowerControl(id, power)
+func (du *DeviceUsecase) Control(id string, power string, mode string) error {
+	return du.repository.Control(id, power, mode)
 }
 
-func (du *DeviceUsecase) ModeControl(id string, mode string) error {
-	return du.repository.ModeControl(id, mode)
+func (du *DeviceUsecase) PostControlAntares(antares_id string, token string, power string, mode string) error {
+	if power == "11" {
+		power = "1"
+	} else if power == "10" {
+		power = "0"
+	}
+	return du.repository.PostControlAntares(antares_id, token, power, mode)
 }

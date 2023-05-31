@@ -23,7 +23,7 @@
                     <td>{{ .Date_updated }}</td>
                     <td>
                         <div class="switcher">
-                            <label for="toggle-otomatis" {{ if eq .Mode_name `Otomatis`}} onclick="changeMode(`{{ .Device_id }}/2`)" {{ else }} onclick="changeMode(`{{ .Device_id }}/1`)" {{ end }}>
+                            <label for="toggle-otomatis" {{ if eq .Mode_name `Otomatis`}} onclick="Controlling(`{{ .Device_id }}/{{ .Antares_id }}/2/{{ .Status_id }}`)" {{ else }} onclick="Controlling(`{{ .Device_id }}/{{ .Antares_id }}/1/{{ .Status_id }}`)" {{ end }}>
                               <input type="checkbox" 
                                 {{ if eq .Mode_name `Otomatis` }} Checked {{ else }} {{ end }} id="toggle-otomatis"/><span><small></small></span>
                             </label>
@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         <div class="switcher {{ if eq .Mode_name `Otomatis` }} disabled-switcher {{ else }} {{ end }}">
-                            <label for="toggle-manual" {{ if eq .Status_name `Aktif`}} onclick="changePower(`{{ .Device_id }}/10`)" {{ else }} onclick="changePower(`{{ .Device_id }}/11`)" {{ end }} >
+                            <label for="toggle-manual" {{ if eq .Status_name `Aktif`}} onclick="Controlling(`{{ .Device_id }}/{{ .Antares_id }}/{{ .Mode_id }}/10`)" {{ else }} onclick="Controlling(`{{ .Device_id }}/{{ .Antares_id }}/{{ .Mode_id }}/11`)" {{ end }} >
                               <input type="checkbox" {{ if eq .Status_name `Aktif`}} checked {{ else }} {{ end }} id="toggle-manual"/><span><small></small></span>
                             </label>
                         </div>
@@ -50,8 +50,8 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function changePower(power){
-        var powerSplitter = power.split('"').join("")
+    function Controlling(condition){
+        var conditionSplitter = condition.split('"').join("")
         Swal.fire({
             title: '<span style="font-size: 16px;font-weight: 400;">Apakah Kamu Yakin Ingin Menyalakan Perangkat?</span>',
             showDenyButton: true,
@@ -60,24 +60,7 @@
             denyButtonText: `Tidak`,
             }).then((result) => {
             if (result.isConfirmed) {
-                window.location = "/power-control/" + powerSplitter;
-            } else if (result.isDenied) {
-                window.location = "/daftar-perangkat";
-            }
-        })
-    }
-
-    function changeMode(mode){
-        var modeSplitter = mode.split('"').join("")
-        Swal.fire({
-            title: '<span style="font-size: 16px;font-weight: 400;">Apakah Kamu Yakin Ingin Mengubah Mode Perangkat?</span>',
-            showDenyButton: true,
-            confirmButtonText: 'Ya',
-            confirmButtonColor: '#282689',
-            denyButtonText: `Tidak`,
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = "/mode-control/" + modeSplitter;
+                window.location = "/control/" + conditionSplitter;
             } else if (result.isDenied) {
                 window.location = "/daftar-perangkat";
             }

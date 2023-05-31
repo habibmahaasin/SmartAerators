@@ -26,18 +26,23 @@ func (dc *DevicesController) SubscribeWebhook(c *fiber.Ctx) error {
 	return nil
 }
 
-func (dc *DevicesController) PowerControl(c *fiber.Ctx) error {
-	id := c.Params("id")
-	power := c.Params("power")
-	dc.deviceUseCase.PowerControl(id, power)
-
-	return c.Redirect("/daftar-perangkat")
-}
-
-func (dc *DevicesController) ModeControl(c *fiber.Ctx) error {
+func (dc *DevicesController) Control(c *fiber.Ctx) error {
 	id := c.Params("id")
 	mode := c.Params("mode")
-	dc.deviceUseCase.ModeControl(id, mode)
+	antares_id := c.Params("antares")
+	power := c.Params("power")
+	token := "862b34fe2de548cc:cdf66d91b12db8d2"
+
+	err := dc.deviceUseCase.Control(id, power, mode)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	postAntares := dc.deviceUseCase.PostControlAntares(antares_id, token, power, mode)
+	if postAntares != nil {
+		fmt.Println(postAntares)
+		return nil
+	}
 
 	return c.Redirect("/daftar-perangkat")
 }

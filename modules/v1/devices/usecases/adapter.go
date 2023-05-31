@@ -9,8 +9,8 @@ type DeviceUsecasePresenter interface {
 	DataFromWebhook(sensorData string, antaresDeviceID string) (domain.SensorData, error)
 	GetDeviceByAntares(antaresDeviceID string) (domain.Device, error)
 	GetAllDevices() ([]domain.Device, error)
-	PowerControl(id string, power string) error
-	ModeControl(id string, mode string) error
+	Control(id string, power string, mode string) error
+	PostControlAntares(antares_id string, token string, power string, mode string) error
 }
 
 type DeviceUsecase struct {
