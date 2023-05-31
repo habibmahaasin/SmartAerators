@@ -1,3 +1,14 @@
+if ($(window).width() < 1200) {
+  $('#body-pd').removeClass('body-pd');
+  $('#header').removeClass('body-pd');
+  $('#nav-bar').removeClass('show');
+}
+else {
+  $('#body-pd').addClass('body-pd');
+  $('#header').addClass('body-pd');
+  $('#nav-bar').addClass('show');
+}
+
 $(window).resize(function() {
   if ($(window).width() < 1200) {
       $('#body-pd').removeClass('body-pd');

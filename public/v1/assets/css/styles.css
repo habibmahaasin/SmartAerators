@@ -124,6 +124,9 @@ a.btn-orange:hover {
   cursor: pointer;
   pointer-events: none;
 }
+.swal2-actions{
+  gap: 10px !important;
+}
 @media screen and (max-width: 768px) {
   #guppytech-table_filter label input {
     width: calc(100vw - 200px);
@@ -134,8 +137,8 @@ a.btn-orange:hover {
     flex-direction: column;
     margin-bottom: 20px;
   }
-  .header-container-larg .page-title {
-    margin-bottom: 20px;
+  .btn-orange{
+    margin-top: 25px !important;
   }
 }
 @media screen and (min-width: 767px) {
@@ -149,4 +152,7 @@ a.btn-orange:hover {
   .main-content {
     margin-left: 15px !important;
   }
+.body-pd {
+  padding-left: calc(var(--nav-width) + 12rem);
+}
 }

@@ -10,7 +10,7 @@
                     <th>Nama Perangkat</th>
                     <th>Status Kontrol</th>
                     <th>Data diperbarui</th>
-                    <th>Kontrol Otomatis</th>
+                    <th>Otomatisasi</th>
                     <th>Kontrol Manual</th>
                     <th>Action</th>
                 </tr>
@@ -48,22 +48,3 @@
         </table>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function Controlling(condition){
-        var conditionSplitter = condition.split('"').join("")
-        Swal.fire({
-            title: '<span style="font-size: 16px;font-weight: 400;">Apakah Kamu Yakin Ingin Menyalakan Perangkat?</span>',
-            showDenyButton: true,
-            confirmButtonText: 'Ya',
-            confirmButtonColor: '#282689',
-            denyButtonText: `Tidak`,
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = "/control/" + conditionSplitter;
-            } else if (result.isDenied) {
-                window.location = "/daftar-perangkat";
-            }
-        })
-    }
-</script>

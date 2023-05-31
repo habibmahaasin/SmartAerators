@@ -116,9 +116,6 @@ a {
   left: 0;
   width: calc(var(--nav-width) + 156px);
 }
-.body-pd {
-  padding-left: calc(var(--nav-width) + 12rem);
-}
 .nav_link.active {
   color: #ffffff;
   background-color: #ff521d;
