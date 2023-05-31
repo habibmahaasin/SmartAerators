@@ -33,3 +33,11 @@ func (du *DeviceUsecase) GetDeviceByAntares(antaresDeviceID string) (domain.Devi
 func (du *DeviceUsecase) GetAllDevices() ([]domain.Device, error) {
 	return du.repository.GetAllDevices()
 }
+
+func (du *DeviceUsecase) PowerControl(id string, power string) error {
+	return du.repository.PowerControl(id, power)
+}
+
+func (du *DeviceUsecase) ModeControl(id string, mode string) error {
+	return du.repository.ModeControl(id, mode)
+}

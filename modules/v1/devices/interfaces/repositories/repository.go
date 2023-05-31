@@ -20,6 +20,16 @@ func (dr *DeviceRepository) GetDeviceByAntares(antaresDeviceID string) (domain.D
 func (dr *DeviceRepository) GetAllDevices() ([]domain.Device, error) {
 	var device []domain.Device
 
-	err := dr.db.Find(&device).Error
+	err := dr.db.Raw("select * from devices d inner join device_status ds ON d.status_id = ds.status_id inner join device_mode dm on d.mode_id = dm.mode_id").Scan(&device).Error
 	return device, err
+}
+
+func (dr *DeviceRepository) PowerControl(id string, power string) error {
+	err := dr.db.Exec("UPDATE devices SET status_id  = ?, date_updated = ? WHERE device_id = ?", power, time.Now(), id).Error
+	return err
+}
+
+func (dr *DeviceRepository) ModeControl(id string, mode string) error {
+	err := dr.db.Exec("UPDATE devices SET mode_id  = ?, date_updated = ? WHERE device_id = ?", mode, time.Now(), id).Error
+	return err
 }

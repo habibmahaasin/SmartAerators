@@ -1,29 +1,7 @@
-<div class="content-container">
-    {{ .title }}
-    <p id="inner"></p>
-    <p>WELKOM {{ .name }}</p>
-    <!-- <img src="/img/avatar.png" alt="avatar" height="200"/> -->
-    {{ range .listDevice }}
-    <table style="border: 1px solid black;">
-        <thead style="border: 1px solid black;">
-            <tr>
-                <th style="width: 200px;">Device</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody style="border: 1px solid black;">
-            <tr>
-                <td>{{ .Device_name }}</td>
-                <td>{{ .Status_id }}</td>
-            </tr>
-        </tbody>
-    </table>
-    {{ end }}
+<div class="content-container-large">
+    <div class="header-container-large d-flex justify-content-between">
+      <h1 class="page-title">{{ .title }}</h1>
+    </div>
+    <div class="table-responsive overflow-scroll">
+    </div>
 </div>
-<style>
-    .content-container{
-        background-color: #ffffff; 
-        padding: 20px; 
-        border-radius: 20px;
-    }
-</style>

@@ -25,3 +25,19 @@ func (dc *DevicesController) SubscribeWebhook(c *fiber.Ctx) error {
 
 	return nil
 }
+
+func (dc *DevicesController) PowerControl(c *fiber.Ctx) error {
+	id := c.Params("id")
+	power := c.Params("power")
+	dc.deviceUseCase.PowerControl(id, power)
+
+	return c.Redirect("/daftar-perangkat")
+}
+
+func (dc *DevicesController) ModeControl(c *fiber.Ctx) error {
+	id := c.Params("id")
+	mode := c.Params("mode")
+	dc.deviceUseCase.ModeControl(id, mode)
+
+	return c.Redirect("/daftar-perangkat")
+}

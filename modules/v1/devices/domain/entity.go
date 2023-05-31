@@ -8,7 +8,8 @@ type Device struct {
 	Device_name     string
 	Device_location string
 	Device_label    string
-	Status_id       int
+	Status_name     string
+	Mode_name       string
 	Brand           string
 	User_id         string
 	Latitude        string

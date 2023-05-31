@@ -5,11 +5,13 @@ window.onscroll = () => {
             "style",
             "display: none !important; transition: 0.2s;"
             );
+            $('#header').addClass('hidden-header');
         } else {
             $(".user-information-wrapper").attr(
             "style",
             "display: block; transition: 0.2s;"
             );
+            $('#header').removeClass('hidden-header');
         }
     }
 };

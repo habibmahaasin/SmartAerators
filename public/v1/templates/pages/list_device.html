@@ -1,0 +1,86 @@
+<div class="content-container-large">
+    <div class="header-container-large d-flex justify-content-between">
+      <h1 class="page-title">{{ .title }}</h1>
+      <a class="btn btn-orange"><i class='bx bx-plus'></i> Tambah Perangkat</a>
+    </div>
+    <div class="table-responsive overflow-scroll">
+        <table id="guppytech-table" class="table table-striped" style="width:100%">
+            <thead>
+                <tr style="height: 50px; vertical-align: middle;">
+                    <th>Nama Perangkat</th>
+                    <th>Status Kontrol</th>
+                    <th>Data diperbarui</th>
+                    <th>Kontrol Otomatis</th>
+                    <th>Kontrol Manual</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .listDevice }}
+                <tr style="height: 50px; vertical-align: middle;">
+                    <td>{{ .Device_name }}</td>
+                    <td>{{ .Mode_name }}</td>
+                    <td>{{ .Date_updated }}</td>
+                    <td>
+                        <div class="switcher">
+                            <label for="toggle-otomatis" {{ if eq .Mode_name `Otomatis`}} onclick="changeMode(`{{ .Device_id }}/2`)" {{ else }} onclick="changeMode(`{{ .Device_id }}/1`)" {{ end }}>
+                              <input type="checkbox" 
+                                {{ if eq .Mode_name `Otomatis` }} Checked {{ else }} {{ end }} id="toggle-otomatis"/><span><small></small></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="switcher {{ if eq .Mode_name `Otomatis` }} disabled-switcher {{ else }} {{ end }}">
+                            <label for="toggle-manual" {{ if eq .Status_name `Aktif`}} onclick="changePower(`{{ .Device_id }}/10`)" {{ else }} onclick="changePower(`{{ .Device_id }}/11`)" {{ end }} >
+                              <input type="checkbox" {{ if eq .Status_name `Aktif`}} checked {{ else }} {{ end }} id="toggle-manual"/><span><small></small></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-3">
+                            <a href="#">Detail</a>
+                            <a href="#">Hapus</a>
+                        </div>
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function changePower(power){
+        var powerSplitter = power.split('"').join("")
+        Swal.fire({
+            title: '<span style="font-size: 16px;font-weight: 400;">Apakah Kamu Yakin Ingin Menyalakan Perangkat?</span>',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            confirmButtonColor: '#282689',
+            denyButtonText: `Tidak`,
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "/power-control/" + powerSplitter;
+            } else if (result.isDenied) {
+                window.location = "/daftar-perangkat";
+            }
+        })
+    }
+
+    function changeMode(mode){
+        var modeSplitter = mode.split('"').join("")
+        Swal.fire({
+            title: '<span style="font-size: 16px;font-weight: 400;">Apakah Kamu Yakin Ingin Mengubah Mode Perangkat?</span>',
+            showDenyButton: true,
+            confirmButtonText: 'Ya',
+            confirmButtonColor: '#282689',
+            denyButtonText: `Tidak`,
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "/mode-control/" + modeSplitter;
+            } else if (result.isDenied) {
+                window.location = "/daftar-perangkat";
+            }
+        })
+    }
+</script>

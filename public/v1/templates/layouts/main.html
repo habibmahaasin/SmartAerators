@@ -7,7 +7,8 @@
   <title>{{ .title }}</title>
   <link rel="stylesheet" href="/vendor/css/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 {{ if (eq .title "Login") }}
   <link rel="stylesheet" href="/css/login.css">
@@ -15,7 +16,7 @@
 {{ else }}
   <link rel="stylesheet" href="/css/sidebar.css">
   {{template "layouts/header" .}}
-  <body id="body-pd">
+  <body id="body-pd" class="body-pd">
     <div class="height-100 main-content">
       {{embed}}
     </div>
@@ -24,6 +25,34 @@
 {{ end }}
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script src="/vendor/js/bootstrap/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="/js/sidebar.js"></script>
 <script src="/js/script.js"></script>
+<script>
+  $(document).ready(function () {
+      $('#guppytech-table').DataTable({
+        scrollX: true,
+        "pageLength": 5,
+        "lengthMenu": [
+            [5,10, 25, 50, -1],
+            [5,10, 25, 50, 'All'],
+        ],
+        "pagingType": 'full',
+        "language": {
+            "emptyTable": "Data Pengguna kosong",
+            "zeroRecords": "Data tidak ditemukan",
+            "lengthMenu": "Baris per halaman _MENU_ ",
+            "info": " _START_ - _END_ dari _TOTAL_ ",
+            "loadingRecords": "Loading ..",
+            "paginate": {
+                'previous': "<i class='bx bx-chevron-left bx-sm'></i>",
+                'next': "<i class='bx bx-chevron-right bx-sm'></i>",
+                "first": "<i class='bx bx-chevrons-left bx-sm'></i>",
+                "last": "<i class='bx bx-chevrons-right bx-sm'></i>"
+            }
+        }
+      });
+  });
+</script>
 </html>

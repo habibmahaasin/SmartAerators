@@ -1,9 +1,3 @@
-if ($(window).width() > 1200) {
-  $('#body-pd').addClass('body-pd');
-  $('#header').addClass('body-pd');
-  $('#nav-bar').addClass('show');
-}
-
 $(window).resize(function() {
   if ($(window).width() < 1200) {
       $('#body-pd').removeClass('body-pd');
