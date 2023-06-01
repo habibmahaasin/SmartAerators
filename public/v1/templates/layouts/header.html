@@ -39,7 +39,11 @@
           <i class='bx bx-cog nav_icon'></i>
           <span class="nav_name">Pengaturan Perangkat</span>
         </a>
-        <a href="#" class="nav_link">
+        {{ if (eq .title "Laporan") }}
+          <a href="/laporan" class="nav_link active">
+        {{ else }}
+          <a href="/laporan" class="nav_link">
+        {{ end }}
           <i class='bx bx-bar-chart nav_icon'></i>
           <span class="nav_name">Laporan</span>
         </a>

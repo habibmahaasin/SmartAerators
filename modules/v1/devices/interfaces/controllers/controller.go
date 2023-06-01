@@ -4,6 +4,7 @@ import (
 	"SmartAerators/modules/v1/devices/domain"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -38,10 +39,13 @@ func (dc *DevicesController) Control(c *fiber.Ctx) error {
 		fmt.Println(err)
 		return nil
 	}
-	postAntares := dc.deviceUseCase.PostControlAntares(antares_id, token, power, mode)
-	if postAntares != nil {
-		fmt.Println(postAntares)
-		return nil
+	for i := 0; i < 2; i++ {
+		postAntares := dc.deviceUseCase.PostControlAntares(antares_id, token, power, mode)
+		if postAntares != nil {
+			fmt.Println(postAntares)
+			return nil
+		}
+		time.Sleep(2 * time.Second)
 	}
 
 	return c.Redirect("/daftar-perangkat")

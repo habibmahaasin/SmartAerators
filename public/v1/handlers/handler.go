@@ -48,3 +48,22 @@ func (u *viewHandler) ListDevice(c *fiber.Ctx) error {
 		"listDevice": ListDevice,
 	}, layouts)
 }
+
+func (u *viewHandler) Report(c *fiber.Ctx) error {
+	sess, err := u.store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+
+	name := sess.Get("name")
+	History, err := u.deviceUsecase.GetDeviceHistory()
+	if err != nil {
+		panic(err)
+	}
+
+	return c.Render("pages/report", fiber.Map{
+		"title":   "Laporan",
+		"name":    name,
+		"history": History,
+	}, layouts)
+}

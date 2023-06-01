@@ -17,11 +17,15 @@ func (du *DeviceUsecase) DataFromWebhook(sensorData string, antaresDeviceID stri
 
 	getDetailDevice, err := du.GetDeviceByAntares(antaresDeviceID)
 	data.Device_id = getDetailDevice.Device_id
-	if data.Status_device != 11 {
+	if data.Status_device == 1 {
+		data.Status_device = 11
+	} else if data.Status_device == 0 {
+		data.Status_device = 10
+	} else {
 		data.Status_device = 10
 	}
 
-	// getDeviceDetail := du.
+	fmt.Println(data)
 	err = du.repository.ExportDataWebhook(data.Device_id, data)
 	return data, err
 }
@@ -45,4 +49,8 @@ func (du *DeviceUsecase) PostControlAntares(antares_id string, token string, pow
 		power = "0"
 	}
 	return du.repository.PostControlAntares(antares_id, token, power, mode)
+}
+
+func (du *DeviceUsecase) GetDeviceHistory() ([]domain.DeviceHistory, error) {
+	return du.repository.GetDeviceHistory()
 }

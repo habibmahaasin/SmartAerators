@@ -11,6 +11,7 @@ type DeviceUsecasePresenter interface {
 	GetAllDevices() ([]domain.Device, error)
 	Control(id string, power string, mode string) error
 	PostControlAntares(antares_id string, token string, power string, mode string) error
+	GetDeviceHistory() ([]domain.DeviceHistory, error)
 }
 
 type DeviceUsecase struct {

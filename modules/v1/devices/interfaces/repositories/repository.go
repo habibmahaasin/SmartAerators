@@ -3,14 +3,15 @@ package repositories
 import (
 	"SmartAerators/modules/v1/devices/domain"
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
 )
 
 func (dr *DeviceRepository) ExportDataWebhook(Device_id string, input domain.SensorData) error {
-	err := dr.db.Exec("INSERT INTO device_history (device_id, status_id, data, history_date) VALUES (?,?,?,?)", Device_id, input.Status_device, input.Data, time.Now()).Error
-	err = dr.db.Exec("UPDATE devices SET status_id = ?, date_updated = ? WHERE device_id = ?", input.Status_device, time.Now(), Device_id).Error
+	err := dr.db.Exec("INSERT INTO device_history (status_id, mode_id, device_id, temperature, ph, dissolved_oxygen, history_date) VALUES (?,?,?,?,?,?,?)", input.Status_device, input.Device_mode, Device_id, input.Temperature, input.Ph, input.Dissolved_oxygen, time.Now()).Error
+	err = dr.db.Exec("UPDATE devices SET status_id  = ?, mode_id  = ?, date_updated = ? WHERE device_id = ?", input.Status_device, input.Device_mode, time.Now(), Device_id).Error
 	return err
 }
 
@@ -60,4 +61,11 @@ func (dr *DeviceRepository) PostControlAntares(antares_id string, token string, 
 	}
 
 	return nil
+}
+
+func (dr *DeviceRepository) GetDeviceHistory() ([]domain.DeviceHistory, error) {
+	var DeviceHistory []domain.DeviceHistory
+	fmt.Println(DeviceHistory)
+	err := dr.db.Raw("select d.device_name, ds.status_name, dm.mode_name, dh.ph, dh.temperature, dh.dissolved_oxygen, dh.history_date from  device_history dh inner join devices d on dh.device_id = d.device_id inner join device_status ds on dh.status_id = ds.status_id inner join device_mode dm on dh.mode_id = dm.mode_id ORDER BY dh.history_id DESC").Scan(&DeviceHistory).Error
+	return DeviceHistory, err
 }

@@ -37,6 +37,7 @@ func Routes(router *fiber.App, db *gorm.DB) *fiber.App {
 	pages := router.Group("", mid.AuthPages())
 	pages.Get("/", viewHandler.Index)
 	pages.Get("/daftar-perangkat", viewHandler.ListDevice)
+	pages.Get("/laporan", viewHandler.Report)
 	pages.Get("/control/:id/:antares/:mode/:power", deviceController.Control)
 	pages.Get("/logout", userController.Logout)
 

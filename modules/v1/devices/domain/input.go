@@ -18,9 +18,12 @@ type AntaresDetail struct {
 }
 
 type SensorData struct {
-	Data          int `json:"data"`
-	Status_device int `json:"status_device"`
-	Device_id     string
+	Device_mode      int     `json:"aeratorMode"`
+	Status_device    int     `json:"statusDevice"`
+	Temperature      float32 `json:"temperature"`
+	Ph               float32 `json:"ph"`
+	Dissolved_oxygen float32 `json:"dissolvedOxygen"`
+	Device_id        string
 }
 
 type ObjectAntares5 struct {
